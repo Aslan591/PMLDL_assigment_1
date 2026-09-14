@@ -1,23 +1,23 @@
 schema: '2.0'
 stages:
   download:
-    cmd: python code/datasets/download_data.py
+    cmd: python src/datasets/download_data.py
     outs:
     - path: data/raw/titanic.csv
       hash: md5
       md5: 61fdd54abdbf6a85b778e937122e1194
       size: 60302
   prepare:
-    cmd: python code/datasets/prepare_data.py
+    cmd: python src/datasets/prepare_data.py
     deps:
-    - path: code/datasets/prepare_data.py
-      hash: md5
-      md5: 61e57781dea99844dc63a2e011c307e4
-      size: 1273
     - path: data/raw/titanic.csv
       hash: md5
       md5: 61fdd54abdbf6a85b778e937122e1194
       size: 60302
+    - path: src/datasets/prepare_data.py
+      hash: md5
+      md5: 61e57781dea99844dc63a2e011c307e4
+      size: 1273
     outs:
     - path: data/processed/test.csv
       hash: md5
@@ -28,12 +28,8 @@ stages:
       md5: ae0565112f5623b33103da2071ce170b
       size: 15644
   train:
-    cmd: python code/models/train_model.py
+    cmd: python src/models/train_model.py
     deps:
-    - path: code/models/train_model.py
-      hash: md5
-      md5: 380c905093fc40753342e5159de49f15
-      size: 2584
     - path: data/processed/test.csv
       hash: md5
       md5: 463b2fa9ec9612a45d20218b4e7d8849
@@ -42,6 +38,10 @@ stages:
       hash: md5
       md5: ae0565112f5623b33103da2071ce170b
       size: 15644
+    - path: src/models/train_model.py
+      hash: md5
+      md5: 380c905093fc40753342e5159de49f15
+      size: 2584
     outs:
     - path: metrics.json
       hash: md5
