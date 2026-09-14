@@ -1,0 +1,14 @@
+stages:
+  download:
+    cmd: python code/datasets/download_data.py
+    outs:
+      - data/raw/titanic.csv
+
+  prepare:
+    cmd: python code/datasets/prepare_data.py
+    deps:
+      - data/raw/titanic.csv
+      - code/datasets/prepare_data.py
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
