@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: src/deployment/api/Dockerfile
+    ports:
+      - "8000:8000"
+    container_name: titanic-api
+
+  app:
+    build:
+      context: ../..
+      dockerfile: src/deployment/app/Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      - api
+    container_name: titanic-app
